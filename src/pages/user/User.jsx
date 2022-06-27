@@ -40,8 +40,7 @@ const Select = styled.select`
   cursor: pointer;
 `;
 export default function User() {
-  const navigate = useNavigate();
-  const { books } = useContext(BooksContext);
+  const { books, navigate } = useContext(BooksContext);
   const { id } = useParams();
   const userList = books
     .filter((item) => item.id === id)
@@ -51,8 +50,6 @@ export default function User() {
   const [newBookName, setNewBookName] = useState(
     books.filter((item) => item.id === id).map((item) => item.name)
   );
-  console.log();
-  const [newDone, setNewDone] = useState(userList.map((item) => item.done));
   const [newImage, setNewImage] = useState(
     books.filter((item) => item.id === id).map((item) => item.image)
   );
@@ -71,15 +68,18 @@ export default function User() {
   const [newPhone, setNewPhone] = useState(
     books.filter((item) => item.id === id).map((item) => item.phone)
   );
-  const handleConfirm = (e) => {
-    setNewDone([true]);
-    e.currentTarget.disabled = true;
-  };
-  console.log(newDone);
-  const handleDecline = (e) => {
-    setNewDone([false]);
-    e.currentTarget.disabled = true;
-  };
+  const [newDurum, setNewDurum] = useState(
+    books.filter((item) => item.id === id).map((item) => item.durum)
+  );
+  // const handleConfirm = (e) => {
+  //   setNewDone([true]);
+  //   e.currentTarget.disabled = true;
+  // };
+  // console.log(newDone);
+  // const handleDecline = (e) => {
+  //   setNewDone([false]);
+  //   e.currentTarget.disabled = true;
+  // };
   /* function to update firestore */
   const handleUpdate = async (e) => {
     e.preventDefault();
@@ -93,13 +93,14 @@ export default function User() {
         user: user.toString(),
         buyer: newBuyer.toString(),
         seller: newSeller.toString(),
-        done: newDone[0],
+        durum: parseInt(newDurum[0]),
       });
       navigate("/siparisler");
     } catch (err) {
       console.log(err);
     }
   };
+  console.log(newDurum[0]);
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -147,6 +148,16 @@ export default function User() {
               <div className="userShowInfo">
                 <LocationSearching className="userShowIcon" />
                 <span className="userShowInfoTitle">{item.insurance}</span>
+              </div>
+              <div className="userShowInfo">
+                <LocationSearching className="userShowIcon" />
+                {item.durum === 0 ? (
+                  <span className="userShowInfoTitle">Bekleniyor</span>
+                ) : item.durum === 1 ? (
+                  <span className="userShowInfoTitle">Tamamlandı</span>
+                ) : (
+                  <span className="userShowInfoTitle">İptal Edildi</span>
+                )}
               </div>
             </div>
           </div>
@@ -206,6 +217,7 @@ export default function User() {
                     <Option value="Çağla">Çağla</Option>
                   </Select>
                 </div>
+
                 <div className="userUpdateItem">
                   <label>Kapora</label>
                   <input
@@ -215,7 +227,16 @@ export default function User() {
                     onChange={(e) => setNewInsurance(e.target.value)}
                   />
                 </div>
-                {item.done ? (
+                <div className="userUpdateItem">
+                  <label>Sipraiş Durumu</label>
+                  <Select onChange={(e) => setNewDurum(e.target.value)}>
+                    <Option value={newDurum} hidden></Option>
+                    <Option value={0}>Bekliyor</Option>
+                    <Option value={1}>Tamamla</Option>
+                    <Option value={2}>İptal Et</Option>
+                  </Select>
+                </div>
+                {/* {item.done ? (
                   <div className="userUpdateItem">
                     <button className="orderDecButton" onClick={handleDecline}>
                       Tamamlama
@@ -230,7 +251,7 @@ export default function User() {
                       Tamamla
                     </button>
                   </div>
-                )}
+                )} */}
               </div>
               <div className="userUpdateRight">
                 <button className="userUpdateButton" onClick={handleUpdate}>

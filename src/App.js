@@ -9,6 +9,7 @@ import NewOrder from "./pages/newOrder/NewOrder";
 
 import { BooksContextProvider } from "./context/BooksContext";
 import DoneBooksList from "./pages/doneBooksList/DoneBooksList";
+import CanceledBooksList from "./pages/canceledBooksList/CanceledBooksList";
 
 const AppLayout = () => (
   <>
@@ -31,6 +32,10 @@ function App() {
             <Route
               path="/tamamlanan-siparisler"
               element={<DoneBooksList />}
+            ></Route>
+            <Route
+              path="/iptal-siparisler"
+              element={<CanceledBooksList />}
             ></Route>
             <Route path="/siprais/:id" element={<User />}></Route>
             <Route path="/yeni-siparis" element={<NewOrder />}></Route>

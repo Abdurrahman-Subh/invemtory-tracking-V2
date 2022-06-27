@@ -1,4 +1,4 @@
-import "./booksList.css";
+import "./CanceledBooksList.css";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 
 import { DeleteOutline } from "@material-ui/icons";
@@ -46,9 +46,8 @@ const Container1Text = styled.p`
   font-size: 0.9rem;
   font-weight: 600;
 `;
-export default function BooksList() {
-  const { books, search, setSearchQuery } = useContext(BooksContext);
-
+export default function CanceledBooksList() {
+  const { canceledBooks, search, setSearchQuery } = useContext(BooksContext);
   const handleDelete = async (id) => {
     try {
       const bookDoc = doc(db, "books", id);
@@ -58,7 +57,7 @@ export default function BooksList() {
       console.log(error);
     }
   };
-
+  console.log(canceledBooks);
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -141,14 +140,6 @@ export default function BooksList() {
     //   },
     // },
   ];
-  // const unFormattedDate = books.map((item) => item.createdAt);
-  // console.log(unFormattedDate);
-  // const formattedDate = unFormattedDate.map((item) =>
-  //   new Date(item.seconds * 1000).toLocaleDateString("en-UK")
-  // );
-
-  // console.log(formattedDate);
-
   const localizedTextsMap = {
     columnMenuUnsort: "Sıralamayı Sıfırla",
     columnMenuSortAsc: "Alfabetic Sırala",
@@ -235,7 +226,7 @@ export default function BooksList() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <DataGrid
-        rows={search(books)}
+        rows={search(canceledBooks)}
         disableSelectionOnClick
         columns={columns}
         pageSize={5}

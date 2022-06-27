@@ -51,6 +51,12 @@ export default function Sidebar() {
                 Tamamlanan Siparişler
               </li>
             </Link>
+            <Link to="/iptal-siparisler" className="link">
+              <li className="sidebarListItem">
+                <PermIdentity className="sidebarIcon" />
+                İptal Edilen Siparişler
+              </li>
+            </Link>
 
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />

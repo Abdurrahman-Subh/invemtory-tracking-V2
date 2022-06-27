@@ -21,6 +21,31 @@ const Input = styled.input`
     border: 4px solid #f33b3b;
   }
 `;
+const Container1 = styled.div`
+  background-color: #ffa500;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+`;
+const Container2 = styled.div`
+  background-color: #3ec70b;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+`;
+const Container3 = styled.div`
+  background-color: #f32424;
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  width: 100%;
+`;
+const Container1Text = styled.p`
+  font-size: 0.9rem;
+  font-weight: 600;
+`;
 export default function DoneBooksList() {
   const { doneBooks, search, setSearchQuery } = useContext(BooksContext);
   console.log(doneBooks);
@@ -40,9 +65,9 @@ export default function DoneBooksList() {
       field: "buyer",
       headerName: "Müşteri Adı",
       width: 200,
-      // renderCell: (params) => {
-      //   return <div className="userListUser">{params.row.buyer}</div>;
-      // },
+      renderCell: (params) => {
+        return <div className="userListUser">{params.row.buyer}</div>;
+      },
     },
     { field: "phone", headerName: "Telefon No", width: 180 },
     { field: "seller", headerName: "Satıcı", width: 150 },
@@ -75,23 +100,46 @@ export default function DoneBooksList() {
       },
     },
     {
-      field: "createdAt",
-      type: "date",
-      headerName: "Tarih",
-      width: 240,
-
-      valueFormatter: (params) => {
-        if (params.value === null) {
-          return "";
-        } else {
-          const fireBaseTime = new Date(
-            params.seconds * 1000 + params.nanoseconds / 1000000
+      field: "durum",
+      headerName: "Durum",
+      width: 160,
+      renderCell: (params) => {
+        if (params.row.durum === 0) {
+          return (
+            <Container1>
+              <Container1Text>Sipariş Alındı</Container1Text>
+            </Container1>
           );
-          const date = fireBaseTime.toDateString();
-          return date;
-        }
+        } else if (params.row.durum === 1) {
+          return (
+            <Container2>
+              <Container1Text>Sipariş Tamamlandı</Container1Text>
+            </Container2>
+          );
+        } else
+          return (
+            <Container3>
+              <Container1Text>Sipariş İptal Edildi</Container1Text>
+            </Container3>
+          );
       },
     },
+    // {
+    //   field: "createdAt",
+    //   headerName: "Tarih",
+    //   width: 240,
+    //   valueFormatter: (params) => {
+    //     if (params.row.createdAt.value === null) {
+    //       return "";
+    //     } else {
+    //       const fireBaseTime = new Date(
+    //         params.row.createdAt.seconds * 1000 + params.nanoseconds / 1000000
+    //       );
+    //       const date = fireBaseTime.toDateString().toString();
+    //       return date;
+    //     }
+    //   },
+    // },
   ];
 
   const localizedTextsMap = {
