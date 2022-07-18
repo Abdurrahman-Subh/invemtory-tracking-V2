@@ -12,7 +12,7 @@ const Input = styled.input`
   width: 20%;
   padding: 2px 20px;
   margin: 8px 0;
-  border: 4px dotted #f33b3b;
+  border: 4px solid #f33b3b;
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1.4rem;
@@ -22,29 +22,30 @@ const Input = styled.input`
   }
 `;
 const Container1 = styled.div`
-  background-color: #ffa500;
-  color: #fff;
+  background-color: #e7ecf7;
+  color: #2a7ade;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
 `;
 const Container2 = styled.div`
-  background-color: #3ec70b;
-  color: #fff;
+  background-color: #e5faf2;
+  color: #3bb077;
   border-radius: 10px;
   padding: 10px;
+
   width: 100%;
 `;
 const Container3 = styled.div`
-  background-color: #f32424;
-  color: #fff;
+  background-color: #fff0f1;
+  color: #d95087;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
 `;
 const Container1Text = styled.p`
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
 `;
 export default function BooksList() {
   const { books, search, setSearchQuery } = useContext(BooksContext);

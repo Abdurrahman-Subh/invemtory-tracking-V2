@@ -8,11 +8,17 @@ import { BooksContext } from "../../context/BooksContext";
 import { deleteDoc, doc } from "firebase/firestore";
 import { db } from "../../firebase";
 import styled from "styled-components";
+const MainContainer = styled.div`
+  flex: 2;
+  -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
+  padding: 70px;
+`;
 const Input = styled.input`
   width: 20%;
   padding: 2px 20px;
   margin: 8px 0;
-  border: 4px dotted #f33b3b;
+  border: 4px solid #f33b3b;
   border-radius: 4px;
   box-sizing: border-box;
   font-size: 1.4rem;
@@ -29,8 +35,8 @@ const Container1 = styled.div`
   width: 100%;
 `;
 const Container2 = styled.div`
-  background-color: #3ec70b;
-  color: #fff;
+  background-color: #e5faf2;
+  color: #3bb077;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
@@ -44,7 +50,7 @@ const Container3 = styled.div`
 `;
 const Container1Text = styled.p`
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
 `;
 export default function DoneBooksList() {
   const { doneBooks, search, setSearchQuery } = useContext(BooksContext);

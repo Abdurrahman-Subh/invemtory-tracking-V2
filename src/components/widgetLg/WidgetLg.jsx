@@ -1,79 +1,61 @@
+import { useContext } from "react";
+import { BooksContext } from "../../context/BooksContext";
 import "./widgetLg.css";
+import { Link } from "react-router-dom";
+import { Visibility } from "@material-ui/icons";
 
 export default function WidgetLg() {
-  const Button = ({ type }) => {
-    return <button className={"widgetLgButton " + type}>{type}</button>;
-  };
+  const { latestBooks } = useContext(BooksContext);
+
   return (
-    <div className="widgetLg">
-      <h3 className="widgetLgTitle">Latest transactions</h3>
+    <div className="widgetLg in-left">
+      <h3 className="widgetLgTitle">Son Siparişler</h3>
       <table className="widgetLgTable">
         <tr className="widgetLgTr">
-          <th className="widgetLgTh">Customer</th>
-          <th className="widgetLgTh">Date</th>
-          <th className="widgetLgTh">Amount</th>
-          <th className="widgetLgTh">Status</th>
+          <th className="widgetLgTh">Müşteri</th>
+          <th className="widgetLgTh">Tarih</th>
+          <th className="widgetLgTh">Kapora</th>
+          <th className="widgetLgTh">Durum</th>
+          <th className="widgetLgTh">Akisyon</th>
         </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img
-              src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt=""
-              className="widgetLgImg"
-            />
-            <span className="widgetLgName">Susan Carol</span>
-          </td>
-          <td className="widgetLgDate">2 Jun 2021</td>
-          <td className="widgetLgAmount">$122.00</td>
-          <td className="widgetLgStatus">
-            <Button type="Approved" />
-          </td>
-        </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img
-              src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt=""
-              className="widgetLgImg"
-            />
-            <span className="widgetLgName">Susan Carol</span>
-          </td>
-          <td className="widgetLgDate">2 Jun 2021</td>
-          <td className="widgetLgAmount">$122.00</td>
-          <td className="widgetLgStatus">
-            <Button type="Declined" />
-          </td>
-        </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img
-              src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt=""
-              className="widgetLgImg"
-            />
-            <span className="widgetLgName">Susan Carol</span>
-          </td>
-          <td className="widgetLgDate">2 Jun 2021</td>
-          <td className="widgetLgAmount">$122.00</td>
-          <td className="widgetLgStatus">
-            <Button type="Pending" />
-          </td>
-        </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img
-              src="https://images.pexels.com/photos/4172933/pexels-photo-4172933.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940"
-              alt=""
-              className="widgetLgImg"
-            />
-            <span className="widgetLgName">Susan Carol</span>
-          </td>
-          <td className="widgetLgDate">2 Jun 2021</td>
-          <td className="widgetLgAmount">$122.00</td>
-          <td className="widgetLgStatus">
-            <Button type="Approved" />
-          </td>
-        </tr>
+        {latestBooks.map((book) => {
+          return (
+            <tr className="widgetLgTr">
+              <td className="widgetLgUser">
+                <span className="widgetLgName">{book.buyer}</span>
+              </td>
+              <td className="widgetLgDate">
+                {new Date(book.createdAt.seconds * 1000).toLocaleDateString(
+                  "en-UK"
+                )}
+              </td>
+              <td className="widgetLgAmount">{book.insurance} TL</td>
+              <td className="widgetLgStatus">
+                {book.durum === 1 ? (
+                  <button className="widgetLgButtonApp widgetLgButton">
+                    Sipariş Tamamlandı
+                  </button>
+                ) : book.durum === 2 ? (
+                  <button className="widgetLgButtonDec widgetLgButton">
+                    Sipariş İptal Edildi
+                  </button>
+                ) : (
+                  <button className="widgetLgButtonPen widgetLgButton">
+                    Sipariş Bekleniyor
+                  </button>
+                )}
+              </td>
+              <td>
+                <Link to={`/siprais/${book.id}`}>
+                  <button className="widgetSmButton">
+                    <Visibility className="widgetSmIcon" />
+                    Görüntüle
+                  </button>
+                </Link>
+              </td>
+            </tr>
+          );
+        })}
       </table>
     </div>
   );

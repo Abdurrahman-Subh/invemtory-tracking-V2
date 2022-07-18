@@ -1,31 +1,46 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./topbar.css";
 import { NotificationsNone, Language, Settings } from "@material-ui/icons";
+import { BooksContext } from "../../context/BooksContext";
+import { UserAuth } from "../../context/AuthContext";
 
 export default function Topbar() {
+  const { waitingBooks } = useContext(BooksContext);
+  const { user, logout } = UserAuth();
+  const handleLogout = async () => {
+    try {
+      await logout();
+      console.log("You are logged out");
+      window.location.reload(false);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
   return (
     <div className="topbar">
+      <div className="topLeft">
+        <span className="menuTitle">Hızlı Menü</span>
+      </div>
       <div className="topbarWrapper">
-        <div className="topLeft">
-          <span className="logo">Kaya Kırtasiye Sipraiş Takip Sistemi</span>
-        </div>
+        <span className="logo">Kaya Kırtasiye Sipraiş Takip Sistemi</span>
+
         <div className="topRight">
           <div className="topbarIconContainer">
-            <NotificationsNone />
-            <span className="topIconBadge">2</span>
+            <NotificationsNone className="iconNotif" />
+            <span className="topIconBadge">{waitingBooks.length}</span>
           </div>
           <div className="topbarIconContainer">
-            <Language />
-            <span className="topIconBadge">2</span>
+            <img
+              src="https://www.kayakirtasiye.com.tr/uploads/favicon.png"
+              alt=""
+              className="topAvatar"
+            />
           </div>
           <div className="topbarIconContainer">
-            <Settings />
+            <button className="logoutBtn" onClick={handleLogout}>
+              Çıkış Yap
+            </button>
           </div>
-          <img
-            src="https://images.pexels.com/photos/1526814/pexels-photo-1526814.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-            alt=""
-            className="topAvatar"
-          />
         </div>
       </div>
     </div>

@@ -1,9 +1,9 @@
-.user {
+.user1 {
   flex: 4;
   padding: 20px 0;
 }
 
-.userTitleContainer {
+.userTitleContainer1{
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -59,12 +59,17 @@
   font-size: 1.2rem;
 }
 
-.userContainer {
+.userContainer1 {
   display: flex;
   margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.userShow {
+.userShow1 {
   flex: 1;
   padding: 20px;
   -webkit-box-shadow: 0px 0px 15px -10px rgba(0, 0, 0, 0.75);
@@ -103,19 +108,21 @@
 
 .userShowUserTitle {
   font-weight: 300;
+  
 }
 
 .userShowBottom{
     margin-top: 20px;
 }
 
-.userShowTitle {
-  font-size: 14px;
+.userShowTitle1 {
+  font-size: 20px;
+  text-align: center;
   font-weight: 600;
-  color: rgb(175, 170, 170);
+  color: #000;
 }
 
-.userShowInfo{
+.userShowInfo1{
     display: flex;
     align-items: center;
     margin: 20px 0px;
@@ -128,7 +135,7 @@
     font-size: 24px !important;
 }
 
-.userShowInfoTitle{
+.userShowInfoTitle1{
     margin-left: 10px;
 }
 

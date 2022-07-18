@@ -1,38 +1,40 @@
 import "./featuredInfo.css";
 import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
-
+import { useContext, useEffect, useState } from "react";
+import { BooksContext } from "../../context/BooksContext";
 export default function FeaturedInfo() {
+  const { books, doneBooks, waitingBooks, canceledBooks } =
+    useContext(BooksContext);
+
   return (
-    <div className="featured">
-      <div className="featuredItem">
-        <span className="featuredTitle">Revanue</span>
+    <div className="featured in-left">
+      <div className="featuredItem1">
+        <span className="featuredTitle">Toplam Sipariş Sayısı</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$2,415</span>
-          <span className="featuredMoneyRate">
-            -11.4 <ArrowDownward  className="featuredIcon negative"/>
-          </span>
+          <span className="featuredMoney">{books.length}</span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
+        <hr />
       </div>
-      <div className="featuredItem">
-        <span className="featuredTitle">Sales</span>
+      <div className="featuredItem2">
+        <span className="featuredTitle">Onaylanan Sipariş Sayısı</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$4,415</span>
-          <span className="featuredMoneyRate">
-            -1.4 <ArrowDownward className="featuredIcon negative"/>
-          </span>
+          <span className="featuredMoney">{doneBooks.length}</span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
+        <hr />
       </div>
-      <div className="featuredItem">
-        <span className="featuredTitle">Cost</span>
+      <div className="featuredItem3">
+        <span className="featuredTitle">Bekleyen Sipariş Sayısı</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">$2,225</span>
-          <span className="featuredMoneyRate">
-            +2.4 <ArrowUpward className="featuredIcon"/>
-          </span>
+          <span className="featuredMoney">{waitingBooks.length}</span>
         </div>
-        <span className="featuredSub">Compared to last month</span>
+        <hr />
+      </div>
+      <div className="featuredItem4">
+        <span className="featuredTitle">İptal Edilen Sipariş Sayısı</span>
+        <div className="featuredMoneyContainer">
+          <span className="featuredMoney">{canceledBooks.length}</span>
+        </div>
+        <hr />
       </div>
     </div>
   );

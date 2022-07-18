@@ -1,19 +1,21 @@
 import {
   CalendarToday,
   LocationSearching,
-  MailOutline,
   PermIdentity,
   PhoneAndroid,
-  Publish,
+  Book,
+  Store,
+  Money,
 } from "@material-ui/icons";
 import { doc, updateDoc } from "firebase/firestore";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { BooksContext } from "../../context/BooksContext";
 import { db } from "../../firebase";
 import "./user.css";
 import styled from "styled-components";
+import { useReactToPrint } from "react-to-print";
 const Option = styled.option`
   text-align: start;
 `;
@@ -50,9 +52,6 @@ export default function User() {
   const [newBookName, setNewBookName] = useState(
     books.filter((item) => item.id === id).map((item) => item.name)
   );
-  const [newImage, setNewImage] = useState(
-    books.filter((item) => item.id === id).map((item) => item.image)
-  );
   const [newInsurance, setNewInsurance] = useState(
     books.filter((item) => item.id === id).map((item) => item.insurance)
   );
@@ -87,7 +86,6 @@ export default function User() {
     try {
       await updateDoc(taskDocRef, {
         name: newBookName.toString(),
-        image: newImage.toString(),
         insurance: parseInt(newInsurance),
         phone: parseInt(newPhone),
         user: user.toString(),
@@ -100,7 +98,7 @@ export default function User() {
       console.log(err);
     }
   };
-  console.log(newDurum[0]);
+
   return (
     <div className="user">
       <div className="userTitleContainer">
@@ -108,59 +106,79 @@ export default function User() {
         <Link to="/yeni-siparis">
           <button className="userAddButton">Yeni Sipariş Oluştur</button>
         </Link>
+        <Link to={`/yazdir/${id}`}>
+          <button className="userPrintButton">Yazdır</button>
+        </Link>
       </div>
       {userList.map((item) => (
         <div className="userContainer">
           <div className="userShow">
             <div className="userShowTop">
-              <img
-                src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
-                alt=""
-                className="userShowImg"
-              />
-              <div className="userShowTopTitle">
-                <span className="userShowUsername">{item.buyer}</span>
-              </div>
-            </div>
-            <div className="userShowBottom">
-              <span className="userShowTitle">Sipariş Bilgileri</span>
-              <div className="userShowInfo">
-                <PermIdentity className="userShowIcon" />
-                <span className="userShowInfoTitle">{item.name}</span>
-              </div>
-              <div className="userShowInfo">
-                <CalendarToday className="userShowIcon" />
-                <span className="userShowInfoTitle">
-                  {new Date(item.createdAt.seconds * 1000).toLocaleDateString(
-                    "en-UK"
-                  )}
-                </span>
-              </div>
-              <span className="userShowTitle">Contact Details</span>
-              <div className="userShowInfo">
-                <PhoneAndroid className="userShowIcon" />
-                <span className="userShowInfoTitle">{item.phone}</span>
-              </div>
-              <div className="userShowInfo">
-                <MailOutline className="userShowIcon" />
-                <span className="userShowInfoTitle">{item.seller}</span>
-              </div>
-              <div className="userShowInfo">
-                <LocationSearching className="userShowIcon" />
-                <span className="userShowInfoTitle">{item.insurance}</span>
-              </div>
-              <div className="userShowInfo">
-                <LocationSearching className="userShowIcon" />
-                {item.durum === 0 ? (
-                  <span className="userShowInfoTitle">Bekleniyor</span>
-                ) : item.durum === 1 ? (
-                  <span className="userShowInfoTitle">Tamamlandı</span>
-                ) : (
-                  <span className="userShowInfoTitle">İptal Edildi</span>
-                )}
+              <div>
+                <div className="userShowBottom">
+                  <span className="userShowTitle">Sipariş Bilgileri</span>
+                  <div className="userShowInfo">
+                    <PermIdentity className="userShowIcon" />
+                    &nbsp;&nbsp;&nbsp;
+                    <span className="userShowUsername">
+                      Müşteri Adı: {item.buyer}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <Book className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Kitap Adı: {item.name}
+                    </span>
+                  </div>
+
+                  <div className="userShowInfo">
+                    <CalendarToday className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Ne Zaman Sipariş Edildi:{" "}
+                      {new Date(
+                        item.createdAt.seconds * 1000
+                      ).toLocaleDateString("en-UK")}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <PhoneAndroid className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Telefon NO: 0{item.phone}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <Store className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Nerde Sipariş Edildi: {item.seller}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <Money className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Kapora: {item.insurance}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <LocationSearching className="userShowIcon" />
+                    {item.durum === 0 ? (
+                      <span className="userShowInfoTitle durum">
+                        Sipariş Alındı
+                      </span>
+                    ) : item.durum === 1 ? (
+                      <span className="userShowInfoTitle durum">
+                        Tamamlandı
+                      </span>
+                    ) : (
+                      <span className="userShowInfoTitle durum">
+                        İptal Edildi
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
+
           <div className="userUpdate">
             <span className="userUpdateTitle">Edit</span>
             <div className="userUpdateForm">
