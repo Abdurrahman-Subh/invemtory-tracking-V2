@@ -1,12 +1,12 @@
 import "./CanceledBooksList.css";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { BooksContext } from "../../context/BooksContext";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
+// import { deleteDoc, doc } from "firebase/firestore";
+// import { db } from "../../firebase";
 import styled from "styled-components";
 const Input = styled.input`
   width: 20%;
@@ -36,8 +36,8 @@ const Container2 = styled.div`
   width: 100%;
 `;
 const Container3 = styled.div`
-  background-color: #f32424;
-  color: #fff;
+  background-color: #fff0f1;
+  color: #d95087;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
@@ -48,16 +48,16 @@ const Container1Text = styled.p`
 `;
 export default function CanceledBooksList() {
   const { canceledBooks, search, setSearchQuery } = useContext(BooksContext);
-  const handleDelete = async (id) => {
-    try {
-      const bookDoc = doc(db, "books", id);
-      await deleteDoc(bookDoc);
-      window.location.reload(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  console.log(canceledBooks);
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const bookDoc = doc(db, "books", id);
+  //     await deleteDoc(bookDoc);
+  //     window.location.reload(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  // console.log(canceledBooks);
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
     {
@@ -82,18 +82,18 @@ export default function CanceledBooksList() {
     },
     {
       field: "action",
-      headerName: "Action",
-      width: 140,
+      headerName: "İşlemler",
+      width: 150,
       renderCell: (params) => {
         return (
           <>
             <Link to={`/siprais/${params.row.id}`}>
               <button className="userListEdit">Düzenle</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },

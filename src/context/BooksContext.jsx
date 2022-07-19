@@ -13,6 +13,7 @@ export const BooksContext = createContext({});
 
 export const BooksContextProvider = (props) => {
   const [books, setBooks] = useState([]);
+  const [allBooks, setAllBooks] = useState([]);
   const [latestBooks, setLatestBooks] = useState([]);
   const [doneBooks, setDoneBooks] = useState([]);
   const [waitingBooks, setWaitingBooks] = useState([]);
@@ -37,11 +38,16 @@ export const BooksContextProvider = (props) => {
   const booksCollectionRef = query(
     collection(db, "books"),
     orderBy("createdAt", "desc")
+    // where("durum", "in", [0, 2])
+  );
+  const allBooksCollectionRef = query(
+    collection(db, "books"),
+    orderBy("createdAt", "desc")
   );
   const LatestBooksCollectionRef = query(
     collection(db, "books"),
     orderBy("createdAt", "desc"),
-    limit(8)
+    limit(20)
   );
   const doneBooksCollectionRef = query(
     collection(db, "books"),
@@ -64,6 +70,13 @@ export const BooksContextProvider = (props) => {
       setBooks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
     };
     getBooks();
+  }, [navigate]);
+  useEffect(() => {
+    const getAllBooks = async () => {
+      const data = await getDocs(allBooksCollectionRef);
+      setAllBooks(data.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+    };
+    getAllBooks();
   }, [navigate]);
   useEffect(() => {
     const getWaitingBooks = async () => {
@@ -103,6 +116,7 @@ export const BooksContextProvider = (props) => {
         doneBooks,
         waitingBooks,
         latestBooks,
+        allBooks,
         search,
         canceledBooks,
         setSearchQuery,

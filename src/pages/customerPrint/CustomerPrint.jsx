@@ -65,6 +65,10 @@ export default function CustomerPrint() {
           <div className="userShow1">
             <div className="userShowTop">
               <div className="userShowBottom">
+                <img
+                  src="	https://www.kayakirtasiye.com.tr/skins/shared/images/logo.png"
+                  alt=""
+                />
                 <span className="userShowTitle1">Sipariş Bilgileri</span>
                 <div className="userShowInfo1">
                   <PermIdentity className="userShowIcon" />

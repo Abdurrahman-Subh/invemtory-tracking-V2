@@ -13,7 +13,7 @@ import CanceledBooksList from "./pages/canceledBooksList/CanceledBooksList";
 import CustomerPrint from "./pages/customerPrint/CustomerPrint";
 import SignIn from "./pages/SignIn/SignIn";
 import { AuthContextProvider } from "./context/AuthContext";
-
+import WaitList from "./pages/waitList/WaitList";
 const AppLayout = () => (
   <>
     <Topbar />
@@ -40,7 +40,22 @@ function App() {
                   </ProtectedRoutes>
                 }
               ></Route>
-              <Route path="/siparisler" element={<BooksList />}></Route>
+              <Route
+                path="/siparisler"
+                element={
+                  <ProtectedRoutes>
+                    <BooksList />
+                  </ProtectedRoutes>
+                }
+              ></Route>
+              <Route
+                path="/bekleyen-siparisler"
+                element={
+                  <ProtectedRoutes>
+                    <WaitList />
+                  </ProtectedRoutes>
+                }
+              ></Route>
               <Route
                 path="/tamamlanan-siparisler"
                 element={

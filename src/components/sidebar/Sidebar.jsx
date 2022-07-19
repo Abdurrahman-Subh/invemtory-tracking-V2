@@ -21,10 +21,16 @@ export default function Sidebar() {
                 Yeni Sipraiş Oluştur
               </li>
             </Link>
+            <Link to="/bekleyen-siparisler" className="link">
+              <li className="sidebarListItem">
+                <PermIdentity className="sidebarIcon" />
+                Bekleyen Siparişler
+              </li>
+            </Link>
             <Link to="/siparisler" className="link">
               <li className="sidebarListItem">
                 <PermIdentity className="sidebarIcon" />
-                Siparişler
+                Tüm Siparişler
               </li>
             </Link>
             <Link to="/tamamlanan-siparisler" className="link">

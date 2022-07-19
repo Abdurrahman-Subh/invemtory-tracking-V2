@@ -3,7 +3,7 @@ import { ArrowDownward, ArrowUpward } from "@material-ui/icons";
 import { useContext, useEffect, useState } from "react";
 import { BooksContext } from "../../context/BooksContext";
 export default function FeaturedInfo() {
-  const { books, doneBooks, waitingBooks, canceledBooks } =
+  const { allBooks, doneBooks, waitingBooks, canceledBooks } =
     useContext(BooksContext);
 
   return (
@@ -11,7 +11,7 @@ export default function FeaturedInfo() {
       <div className="featuredItem1">
         <span className="featuredTitle">Toplam Sipariş Sayısı</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">{books.length}</span>
+          <span className="featuredMoney">{allBooks.length}</span>
         </div>
         <hr />
       </div>

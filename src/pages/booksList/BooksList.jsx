@@ -1,12 +1,12 @@
 import "./booksList.css";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { BooksContext } from "../../context/BooksContext";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
+// import { deleteDoc, doc } from "firebase/firestore";
+// import { db } from "../../firebase";
 import styled from "styled-components";
 const Input = styled.input`
   width: 20%;
@@ -50,15 +50,15 @@ const Container1Text = styled.p`
 export default function BooksList() {
   const { books, search, setSearchQuery } = useContext(BooksContext);
 
-  const handleDelete = async (id) => {
-    try {
-      const bookDoc = doc(db, "books", id);
-      await deleteDoc(bookDoc);
-      window.location.reload(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // const handleDelete = async (id) => {
+  //   try {
+  //     const bookDoc = doc(db, "books", id);
+  //     await deleteDoc(bookDoc);
+  //     window.location.reload(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -84,18 +84,18 @@ export default function BooksList() {
     },
     {
       field: "action",
-      headerName: "Action",
-      width: 140,
+      headerName: "İşlemler",
+      width: 150,
       renderCell: (params) => {
         return (
           <>
             <Link to={`/siprais/${params.row.id}`}>
               <button className="userListEdit">Düzenle</button>
             </Link>
-            <DeleteOutline
+            {/* <DeleteOutline
               className="userListDelete"
               onClick={() => handleDelete(params.row.id)}
-            />
+            /> */}
           </>
         );
       },
@@ -239,8 +239,8 @@ export default function BooksList() {
         rows={search(books)}
         disableSelectionOnClick
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[5]}
+        pageSize={50}
+        rowsPerPageOptions={[50]}
         components={{ Toolbar: GridToolbar }}
         componentsProps={{
           toolbar: {

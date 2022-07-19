@@ -64,10 +64,15 @@
   margin-top: 20px;
   justify-content: center;
   align-items: center;
-  width: 40%;
+  width: 70%;
   margin-left: auto;
   margin-right: auto;
 }
+.userShowBottom img{
+  width: 85%;
+  text-align: center;
+}
+
 
 .userShow1 {
   flex: 1;
@@ -113,6 +118,13 @@
 
 .userShowBottom{
     margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+
 }
 
 .userShowTitle1 {

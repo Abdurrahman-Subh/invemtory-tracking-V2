@@ -1,12 +1,12 @@
-import "./doneBooksList.css";
+import "./waitList.css";
 import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 
-import { DeleteOutline } from "@material-ui/icons";
+// import { DeleteOutline } from "@material-ui/icons";
 import { Link } from "react-router-dom";
 import { useContext, useState } from "react";
 import { BooksContext } from "../../context/BooksContext";
-import { deleteDoc, doc } from "firebase/firestore";
-import { db } from "../../firebase";
+// import { deleteDoc, doc } from "firebase/firestore";
+// import { db } from "../../firebase";
 import styled from "styled-components";
 const MainContainer = styled.div`
   flex: 2;
@@ -28,8 +28,8 @@ const Input = styled.input`
   }
 `;
 const Container1 = styled.div`
-  background-color: #ffa500;
-  color: #fff;
+  background-color: #e7ecf7;
+  color: #2a7ade;
   border-radius: 10px;
   padding: 10px;
   width: 100%;
@@ -52,18 +52,8 @@ const Container1Text = styled.p`
   font-size: 0.9rem;
   font-weight: 700;
 `;
-export default function DoneBooksList() {
-  const { doneBooks, search, setSearchQuery } = useContext(BooksContext);
-  console.log(doneBooks);
-  const handleDelete = async (id) => {
-    try {
-      const bookDoc = doc(db, "books", id);
-      await deleteDoc(bookDoc);
-      window.location.reload(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+export default function WaitList() {
+  const { waitingBooks, search, setSearchQuery } = useContext(BooksContext);
 
   const columns = [
     { field: "id", headerName: "ID", width: 90 },
@@ -85,12 +75,12 @@ export default function DoneBooksList() {
     {
       field: "insurance",
       headerName: "Kapora",
-      width: 160,
+      width: 140,
     },
     {
       field: "action",
       headerName: "İşlemler",
-      width: 150,
+      width: 160,
       renderCell: (params) => {
         return (
           <>
@@ -234,7 +224,7 @@ export default function DoneBooksList() {
         onChange={(e) => setSearchQuery(e.target.value)}
       />
       <DataGrid
-        rows={search(doneBooks)}
+        rows={search(waitingBooks)}
         disableSelectionOnClick
         columns={columns}
         pageSize={5}
