@@ -2,7 +2,7 @@ import { useContext, useState } from "react";
 import { BooksContext } from "../../context/BooksContext";
 import "./widgetLg.css";
 import { Link } from "react-router-dom";
-import { Print, Visibility } from "@material-ui/icons";
+import { Print, Update, Visibility } from "@material-ui/icons";
 import { doc, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase";
 import styled from "styled-components";
@@ -33,18 +33,18 @@ const Select = styled.select`
 `;
 export default function WidgetLg() {
   const { latestBooks } = useContext(BooksContext);
-  // const [newDurum, setNewDurum] = useState([]);
-  // const handleUpdate = async (e, id) => {
-  //   const taskDocRef = doc(db, "books", id);
-  //   try {
-  //     await updateDoc(taskDocRef, {
-  //       durum: newDurum,
-  //     });
-  //     navigate("/siparisler");
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // };
+  const [newDurum, setNewDurum] = useState([]);
+  const handleUpdate = async (id) => {
+    const taskDocRef = doc(db, "books", id);
+    try {
+      await updateDoc(taskDocRef, {
+        durum: parseInt(newDurum),
+      });
+      window.location.reload(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   // console.log(newDurum);
   return (
     <div className="widgetLg in-left">
@@ -100,7 +100,7 @@ export default function WidgetLg() {
                   </button>
                 </Link>
               </td>
-              {/* <td>
+              <td>
                 <Select onChange={(e) => setNewDurum(e.target.value)}>
                   <Option value={newDurum} hidden></Option>
                   <Option value={0}>Bekliyor</Option>
@@ -113,10 +113,10 @@ export default function WidgetLg() {
                   onClick={() => handleUpdate(book.id)}
                   className="widgetSmButton"
                 >
-                  <Visibility className="widgetSmIcon" />
+                  <Update className="widgetSmIcon" />
                   Güncelle
                 </button>
-              </td> */}
+              </td>
             </tr>
           );
         })}
