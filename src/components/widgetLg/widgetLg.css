@@ -18,6 +18,9 @@
   border-spacing: 20px;
   
 }
+.widgetSmButton:disabled{
+  cursor: not-allowed;
+}
 
 .widgetLgTh{
   text-align: left;

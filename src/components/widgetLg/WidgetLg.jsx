@@ -33,19 +33,19 @@ const Select = styled.select`
 `;
 export default function WidgetLg() {
   const { latestBooks } = useContext(BooksContext);
-  const [newDurum, setNewDurum] = useState([]);
+  const [newDurum, setNewDurum] = useState();
   const handleUpdate = async (id) => {
     const taskDocRef = doc(db, "books", id);
     try {
       await updateDoc(taskDocRef, {
-        durum: parseInt(newDurum),
+        durum: parseInt(newDurum[0]),
       });
       window.location.reload(false);
     } catch (err) {
       console.log(err);
     }
   };
-  // console.log(newDurum);
+  console.log(newDurum);
   return (
     <div className="widgetLg in-left">
       <h3 className="widgetLgTitle">Son 20 Sipariş</h3>
@@ -102,6 +102,13 @@ export default function WidgetLg() {
               </td>
               <td>
                 <Select onChange={(e) => setNewDurum(e.target.value)}>
+                  {/* {book.durum === 0 ? (
+                    <Option value={0}>Bekliyor</Option>
+                  ) : book.durum === 1 ? (
+                    <Option value={1}>Tamamla</Option>
+                  ) : (
+                    <Option value={2}>İptal Et</Option>
+                  )} */}
                   <Option value={newDurum} hidden></Option>
                   <Option value={0}>Bekliyor</Option>
                   <Option value={1}>Tamamla</Option>
@@ -110,6 +117,15 @@ export default function WidgetLg() {
               </td>
               <td>
                 <button
+                  disabled={
+                    newDurum == 0
+                      ? false
+                      : newDurum == 1
+                      ? false
+                      : newDurum == 1
+                      ? false
+                      : true
+                  }
                   onClick={() => handleUpdate(book.id)}
                   className="widgetSmButton"
                 >

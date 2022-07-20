@@ -92,6 +92,7 @@ export default function User() {
         buyer: newBuyer.toString(),
         seller: newSeller.toString(),
         durum: parseInt(newDurum[0]),
+        edited: new Date(),
       });
       navigate("/siparisler");
     } catch (err) {
@@ -138,6 +139,15 @@ export default function User() {
                       {new Date(
                         item.createdAt.seconds * 1000
                       ).toLocaleDateString("en-UK")}
+                    </span>
+                  </div>
+                  <div className="userShowInfo">
+                    <CalendarToday className="userShowIcon" />
+                    <span className="userShowInfoTitle">
+                      Son Güncelleme Tarihi:{" "}
+                      {new Date(item.edited?.seconds * 1000).toLocaleDateString(
+                        "en-UK"
+                      )}
                     </span>
                   </div>
                   <div className="userShowInfo">
